@@ -46,6 +46,9 @@ package com.xinguoedu.utils
 		
 		public function load(url:String):void
 		{
+			if(url == null)
+				return;
+			
 			destroy();			
 			if(_isDisplayObject)
 			{					
