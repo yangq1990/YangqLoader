@@ -63,7 +63,17 @@ package com.xinguoedu.utils
 				_urlLoader = new URLLoader();
 				_urlLoader.addEventListener(Event.COMPLETE, completeHandler);
 				_urlLoader.addEventListener(IOErrorEvent.IO_ERROR, errorHandler);
-				_urlLoader.load(new URLRequest(url));
+				try
+				{
+					_urlLoader.load(new URLRequest(url));
+				}
+				catch(err:SecurityError)
+				{
+					if(_errorFunc != null)
+					{
+						_errorFunc.apply(this, ["load " + url + " occurred a securityerror"]);
+					}
+				}
 			}
 		}
 		
@@ -81,7 +91,7 @@ package com.xinguoedu.utils
 			destroy();
 			if(_errorFunc != null)
 			{
-				_errorFunc.apply(this, evt.toString());
+				_errorFunc.apply(this, [evt.toString()]);
 			}
 		}
 		
